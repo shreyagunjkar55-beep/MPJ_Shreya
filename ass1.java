@@ -1,11 +1,11 @@
 import java.util.Scanner;
-class Student {
+class ass1 {
    // Private data members
    private String name;
    private int rollNo;
    private int[] marks = new int[5];
    // Constructor
-   public Student(String name, int rollNo, int[] marks) {
+   public ass1(String name, int rollNo, int[] marks) {
        this.name = name;
        this.rollNo = rollNo;
        this.marks = marks;
@@ -20,7 +20,7 @@ class Student {
    }
    //calculate grade
    public char calculateGrade() {
-       double avg = calculateAverage();
+       int avg = calculateAverage();
        if (avg >= 75) {
            return 'A';
        } else if (avg >= 60) {
@@ -49,7 +49,7 @@ public class StudentGrade {
        for (int i = 0; i < 5; i++) {
            marks[i] = sc.nextInt();
        }
-       Student s = new Student(name, rollNo, marks);
+       ass1 s = new ass1(name, rollNo, marks);
        s.display();
        sc.close();
    }
