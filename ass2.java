@@ -1,56 +1,71 @@
 import java.util.Scanner;
-// Base Class
+
+//base class
 class Employee {
-    public double salary;
-    public double updatedSalary;
-    public Employee(double salary) {
-        this.salary = salary;
-        this.updatedSalary = salary;
-    }
-    // Method to display salary
-    public void displaySalary() {
+    String name;
+    double salary;
+    void displaySalary() {
+        System.out.println("Employee Name: " + name);
         System.out.println("Salary before hike: " + salary);
-        System.out.println("Salary after hike : " + updatedSalary);
     }
 }
-// Derived Class - Full Time Employee
+//derived class 1
 class FullTimeEmployee extends Employee {
-    public FullTimeEmployee(double salary) {
-        super(salary);
-    }
-    // Method to calculate salary with 50% hike
-    public void calculateSalary() {
-        updatedSalary = salary + (salary * 0.50);
+    void calculateSalary() {
+        salary = salary + (salary * 0.50);
+        System.out.println("Salary after 50% hike: " + salary);
     }
 }
-// Derived Class - Intern Employee
+//derived class 2
 class InternEmployee extends Employee {
-    public InternEmployee(double salary) {
-        super(salary);
-    }
-    // Method to calculate salary with 25% hike
-    public void calculateSalary() {
-        updatedSalary = salary + (salary * 0.25);
+    void calculateSalary() {
+        salary = salary + (salary * 0.25);
+        System.out.println("Salary after 25% hike: " + salary);
     }
 }
 public class ass2 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        // Full Time Employee
-        System.out.print("Enter Full Time Employee Salary: ");
-        double ftSalary = sc.nextDouble();
-        FullTimeEmployee fte = new FullTimeEmployee(ftSalary);
-        fte.calculateSalary();
-        System.out.println("\nFull Time Employee Details");
-        fte.displaySalary();
-        // Intern Employee
-        System.out.print("\nEnter Intern Employee Salary: ");
-        double internSalary = sc.nextDouble();
-        InternEmployee intern = new InternEmployee(internSalary);
-        intern.calculateSalary();
-        System.out.println("\nIntern Employee Details");
-        intern.displaySalary();
+        int choice;
+        do {
+            System.out.print("Enter Employee Name: ");
+            String name = sc.next();
+
+            System.out.print("Enter Salary: ");
+            double salary = sc.nextDouble();
+
+            System.out.println("1. Full Time Employee");
+            System.out.println("2. Intern Employee");
+            System.out.print("Enter choice: ");
+            int type = sc.nextInt();
+
+            System.out.println();
+
+            if (type == 1) {
+                FullTimeEmployee f = new FullTimeEmployee();
+                f.name = name;
+                f.salary = salary;
+                f.displaySalary();
+                f.calculateSalary();
+            } 
+            else if (type == 2) {
+                InternEmployee i = new InternEmployee();
+                i.name = name;
+                i.salary = salary;
+                i.displaySalary();
+                i.calculateSalary();
+            } 
+            else {
+                System.out.println("Invalid choice");
+            }
+
+            System.out.println();
+            System.out.print("Enter 1 to continue, 0 to stop: ");
+            choice = sc.nextInt();
+            System.out.println();
+
+        } while (choice == 1);
+
         sc.close();
     }
 }
-
