@@ -1,8 +1,8 @@
 import java.util.Scanner;
 // Base Class
 class Employee {
-    protected double salary;
-    protected double updatedSalary;
+    public double salary;
+    public double updatedSalary;
     public Employee(double salary) {
         this.salary = salary;
         this.updatedSalary = salary;
@@ -53,3 +53,4 @@ public class ass2 {
         sc.close();
     }
 }
+
