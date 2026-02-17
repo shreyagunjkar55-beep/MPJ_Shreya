@@ -60,7 +60,7 @@ public class ass2 {
             }
 
             System.out.println();
-            System.out.print("Enter 1 to continue, 0 to stop: ");
+            System.out.print("Enter 0 to exit: ");
             choice = sc.nextInt();
             System.out.println();
 
@@ -69,3 +69,4 @@ public class ass2 {
         sc.close();
     }
 }
+
