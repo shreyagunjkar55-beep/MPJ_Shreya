@@ -1,56 +1,76 @@
 import java.util.Scanner;
+
 class Shapes {
     double area;
+
+    Shapes() {}
+
     Shapes(double r) {
         area = Math.PI * r * r;
         System.out.println("Area of Circle: " + area);
     }
+
     Shapes(double l, double b) {
         area = l * b;
         System.out.println("Area of Rectangle: " + area);
     }
+
     Shapes(double b, double h, boolean isTriangle) {
         area = 0.5 * b * h;
         System.out.println("Area of Triangle: " + area);
     }
+
     void findArea(double r) {
         System.out.println("Area of Circle: " + (Math.PI * r * r));
     }
+
     void findArea(double l, double b) {
         System.out.println("Area of Rectangle: " + (l * b));
     }
+
     void findArea(double b, double h, boolean isTriangle) {
         System.out.println("Area of Triangle: " + (0.5 * b * h));
     }
 }
-public class Main1 {
+
+public class Lab3a {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
         System.out.println("Constructor Overloading");
+
         System.out.print("Enter radius of circle: ");
         double r = sc.nextDouble();
         new Shapes(r);
+
         System.out.print("Enter length and breadth of rectangle: ");
         double l = sc.nextDouble();
         double b = sc.nextDouble();
         new Shapes(l, b);
+
         System.out.print("Enter base and height of triangle: ");
         double base = sc.nextDouble();
         double height = sc.nextDouble();
         new Shapes(base, height, true);
+
         System.out.println("\nMethod Overloading");
-        Shapes s = new Shapes(0.0);
+
+        Shapes s = new Shapes();
+
         System.out.print("Enter radius of circle: ");
         r = sc.nextDouble();
         s.findArea(r);
+
         System.out.print("Enter length and breadth of rectangle: ");
         l = sc.nextDouble();
         b = sc.nextDouble();
         s.findArea(l, b);
+
         System.out.print("Enter base and height of triangle: ");
         base = sc.nextDouble();
         height = sc.nextDouble();
         s.findArea(base, height, true);
+
         sc.close();
     }
 }
