@@ -1,36 +1,148 @@
+import java.util.*;
 import java.io.*;
-
+class Customer implements Serializable {
+    int id;
+    String name;
+    double balance;
+    Customer(int id, String name, double balance) {
+        this.id = id;
+        this.name = name;
+        this.balance = balance;
+    }
+}
 public class Lab4 {
-
-    public static void main(String[] args) {
-        writeToFile("student.txt", "Hello!\nName: Shreya\nRoll No: 59");
-        readFromFile("student.txt");
-        readFromFile("notexist.txt");
+    static Scanner sc = new Scanner(System.in);
+    static String file = "bank.dat";
+    static Customer[] read() {
+        Customer[] arr = new Customer[20];
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+            arr = (Customer[]) in.readObject();
+            in.close();
+        } catch (Exception e) {}
+        return arr;
     }
-
-    static void writeToFile(String filename, String content) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-            bw.write(content);
-            System.out.println("File written successfully.\n");
-        } catch (IOException e) {
-            System.out.println("Error writing file: " + e.getMessage());
+    static void write(Customer[] arr) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+            out.writeObject(arr);
+            out.close();
+        } catch (Exception e) {
+            System.out.println("Error saving");
         }
     }
-
-    static void readFromFile(String filename) {
-        System.out.println("Reading file: " + filename);
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
+    static void create() {
+        Customer[] arr = read();
+        System.out.print("Enter id: ");
+        int id = sc.nextInt();
+        if (id < 1 || id > 20) {
+            System.out.println("ID must be between 1 and 20");
+            return;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != null && arr[i].id == id) {
+                System.out.println("ID already exists");
+                return;
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + filename);
-        } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+        }
+        sc.nextLine();
+        System.out.print("Enter name: ");
+        String name = sc.nextLine();
+        System.out.print("Enter amount: ");
+        double amt = sc.nextDouble();
+        if (amt < 0) {
+            System.out.println("Amount must be positive");
+            return;
+        }
+        if (amt < 1000) {
+            System.out.println("Minimum balance is 1000");
+            return;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == null) {
+                arr[i] = new Customer(id, name, amt);
+                break;
+            }
         }
 
-        System.out.println("Done trying to read: " + filename + "\n");
+        write(arr);
+        System.out.println("Account created");
+    }
+    static void deposit() {
+        Customer[] arr = read();
+
+        System.out.print("Enter id: ");
+        int id = sc.nextInt();
+
+        System.out.print("Enter amount: ");
+        double amt = sc.nextDouble();
+
+        if (amt < 0) {
+            System.out.println("Amount must be positive");
+            return;
+        }
+        boolean found = false;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != null && arr[i].id == id) {
+                arr[i].balance += amt;
+                System.out.println("New balance: " + arr[i].balance);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Customer not found");
+        } else {
+            write(arr);
+        }
+    }
+    static void withdraw() {
+        Customer[] arr = read();
+        System.out.print("Enter id: ");
+        int id = sc.nextInt();
+        System.out.print("Enter amount: ");
+        double amt = sc.nextDouble();
+        if (amt < 0) {
+            System.out.println("Amount must be positive");
+            return;
+        }
+        boolean found = false;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != null && arr[i].id == id) {
+                if (amt > arr[i].balance) {
+                    System.out.println("Not enough balance");
+                    return;
+                }
+                arr[i].balance -= amt;
+                System.out.println("Remaining: " + arr[i].balance);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Customer not found");
+        } else {
+            write(arr);
+        }
+    }
+
+    static void show() {
+        Customer[] arr = read();
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != null) {
+                System.out.println(arr[i].id + " " + arr[i].name + " " + arr[i].balance);
+            }
+        }
+    }
+    public static void main(String[] args) {
+        int ch;
+        do {
+            System.out.println("\n1 Create 2 Deposit 3 Withdraw 4 Show 5 Exit");
+            ch = sc.nextInt();
+            if (ch == 1) create();
+            else if (ch == 2) deposit();
+            else if (ch == 3) withdraw();
+            else if (ch == 4) show();
+        } while (ch != 5);
     }
 }
