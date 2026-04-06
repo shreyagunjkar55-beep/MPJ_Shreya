@@ -8,7 +8,7 @@ class Hillstations {
 }
 class Manali extends Hillstations {
     void famousfood() {
-        System.out.println("Manali- Famous for Sidu, Babru, and Aktori");
+        System.out.println("Manali- Famous for Sidu, kullu shawls and handmade souvenirs");
     }
     void famousfor() {
         System.out.println("Manali- Famous for snow, adventure sports and Rohtang Pass");
